@@ -85,3 +85,5 @@ Project general requirements are
 ## <a name="screens"></a>Demo screens
     * http://prntscr.com/jjee13
     * http://prntscr.com/jjee5x
+    * http://prntscr.com/jjeexd
+    * http://prntscr.com/jjef2u
