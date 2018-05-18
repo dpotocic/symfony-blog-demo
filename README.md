@@ -6,6 +6,7 @@
   2. [Vagrant setup](#vagrant)
   3. [Local env setup](#local)
   4. [Getting started](#start)
+  5. [Screens](#screens)
 
 [![Symfony 3.4](https://img.shields.io/badge/Powered_by-Symfony_3.4_Framework-green.svg?style=flat)](http://symfony.com/doc/3.4/setup.html)
 
@@ -81,4 +82,6 @@ Project general requirements are
 
     Admin account:    admin/password
 
-
+## <a name="screens"></a>Demo screens
+    * http://prntscr.com/jjee13
+    * http://prntscr.com/jjee5x
