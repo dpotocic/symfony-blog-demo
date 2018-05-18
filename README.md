@@ -68,7 +68,7 @@ Project general requirements are
     4. php bin/console assets:install web
     5. php bin/console doctrine:schema:update --force
     6. php bin/console fos:user:create admin admin@example.com password --super-admin
-    7. php bin//console assetic:dump
+    7. php bin/console assetic:dump
 
 
 ## <a name="start"></a>Getting started
