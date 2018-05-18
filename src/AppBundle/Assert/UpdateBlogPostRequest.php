@@ -38,4 +38,10 @@ class UpdateBlogPostRequest
      */
     public $visible;
 
+    /**
+     *
+     * @var string
+     */
+    public $tags;
+
 }

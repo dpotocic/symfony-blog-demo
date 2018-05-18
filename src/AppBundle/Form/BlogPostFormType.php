@@ -38,6 +38,9 @@ class BlogPostFormType extends \Symfony\Component\Form\AbstractType
                     'choices' => array('Disabled' => 0, 'Visible' => 1),
                     'label' => 'Disabled',
                 ])
+            ->add('tags',  TextType::class, [
+                    'label' => 'Blog tag (separate by space)',
+                ])
             ->add('save', SubmitType::class, [
                     'label' => 'Save',
                     'attr' => ['class' => 'btn btn-success']

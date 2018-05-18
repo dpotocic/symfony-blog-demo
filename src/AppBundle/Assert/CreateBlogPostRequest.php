@@ -38,4 +38,9 @@ class CreateBlogPostRequest
      */
     public $visible;
 
+    /**
+     *
+     * @var string
+     */
+    public $tags;
 }

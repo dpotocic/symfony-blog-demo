@@ -7,12 +7,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\MaxDepth;
+use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as JMS;
 
 
 /**
- * BlogPost
+ * Post
  *
- * @ORM\Table(name="blog_post")
+ * @ORM\Table(name="post")
  * @ORM\Entity
  * @ExclusionPolicy("all")
  * @UniqueEntity(
@@ -22,7 +25,7 @@ use JMS\Serializer\Annotation\Groups;
  * )
  * @ORM\HasLifecycleCallbacks
  */
-class BlogPost
+class Post
 {
     /**
      * @var int
@@ -91,6 +94,62 @@ class BlogPost
     private $viewCount;
 
     /**
+     * @Expose()
+     * @Groups({"details"})
+     * @MaxDepth(3)
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist"}, fetch="EAGER")
+     * @JMS\Type("ArrayCollection<AppBundle\Entity\Tag>")
+     */
+    protected $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     *
+     * @return Tag
+     */
+    public function addTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     */
+    public function removeTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * @param mixed $tags
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -105,7 +164,7 @@ class BlogPost
      *
      * @param string $title
      *
-     * @return BlogPost
+     * @return Post
      */
     public function setTitle($title)
     {
@@ -129,7 +188,7 @@ class BlogPost
      *
      * @param string $slug
      *
-     * @return BlogPost
+     * @return Post
      */
     public function setSlug($slug)
     {
@@ -169,7 +228,7 @@ class BlogPost
      *
      * @param \DateTime $publishDate
      *
-     * @return BlogPost
+     * @return Post
      */
     public function setPublishDate($publishDate)
     {
@@ -193,7 +252,7 @@ class BlogPost
      *
      * @param \DateTime $updatedAt
      *
-     * @return BlogPost
+     * @return Post
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -249,6 +308,11 @@ class BlogPost
      */
     public function prePersist()
     {
+
+        if (!$this->getViewCount()) {
+            $this->setViewCount(0);
+        }
+
         if (!$this->getPublishDate()) {
             $this->setPublishDate(new \DateTime());
         }

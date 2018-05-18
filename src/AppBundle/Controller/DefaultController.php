@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\BlogPost;
+use AppBundle\Entity\Post;
 
 class DefaultController extends Controller
 {
@@ -24,7 +24,7 @@ class DefaultController extends Controller
 
         $entityManager = $this->getDoctrine()->getManager();
         $qb = $entityManager->createQueryBuilder()
-            ->from('AppBundle:BlogPost', 'blog_post')
+            ->from('AppBundle:Post', 'blog_post')
             ->select("blog_post")
             ->where('blog_post.visible = 1');
 
@@ -53,7 +53,7 @@ class DefaultController extends Controller
 
         /** @var BlogPost $content */
         $blogPost = $this->getDoctrine()
-            ->getRepository(BlogPost::class)
+            ->getRepository(Post::class)
             ->findOneBy(['slug' => $slug]);
 
         if (!$blogPost) {

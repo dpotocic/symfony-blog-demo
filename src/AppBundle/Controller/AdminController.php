@@ -2,7 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\BlogPost;
+use AppBundle\Entity\Post;
+use AppBundle\Entity\Tag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,7 +32,7 @@ class AdminController extends Controller
 
         $entityManager = $this->getDoctrine()->getManager();
         $qb = $entityManager->createQueryBuilder()
-            ->from('AppBundle:BlogPost', 'blog_post')
+            ->from('AppBundle:Post', 'blog_post')
             ->select("blog_post");
 
         $paginator  = $this->get('knp_paginator');
@@ -66,12 +67,25 @@ class AdminController extends Controller
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            $blogPost = new BlogPost();
+            $blogPost = new Post();
             $blogPost->setTitle($createBlogPostRequest->title);
             $blogPost->setText($createBlogPostRequest->text);
             $blogPost->setSlug($createBlogPostRequest->slug);
             $blogPost->setPublishDate($createBlogPostRequest->publishDate);
             $blogPost->setVisible($createBlogPostRequest->visible);
+
+            $tags = explode(" ",$createBlogPostRequest->tags);
+            $tags = array_unique($tags);
+            if (isset($tags[0])){
+                foreach($tags as $k=>$v){
+                    $tag = $entityManager->getRepository(Tag::class)->findOneBy(['tag_name' => $v]);
+                    if (!$tag){
+                        $tag = new Tag();
+                        $tag->setTagName($v);
+                    }
+                    $blogPost->addTag($tag);
+                }
+            }
 
             try {
                 $entityManager->persist($blogPost);
@@ -103,8 +117,8 @@ class AdminController extends Controller
     {
 
         $entityManager = $this->getDoctrine()->getManager();
-        /** @var $blogPost BlogPost */
-        $blogPost = $entityManager->getRepository(BlogPost::class)->find($id);
+        /** @var $blogPost Post */
+        $blogPost = $entityManager->getRepository(Post::class)->find($id);
 
         if (!$blogPost) {
             throw $this->createNotFoundException(
@@ -118,6 +132,15 @@ class AdminController extends Controller
         $updateBlogPostRequest->slug = $blogPost->getSlug();
         $updateBlogPostRequest->publishDate = $blogPost->getPublishDate();
         $updateBlogPostRequest->visible = $blogPost->getVisible();
+        $tags = $blogPost->getTags();
+        $tagsArr = [];
+
+        if (isset($tags[0])){
+            foreach($tags as $k=>$v){
+                $tagsArr[] = $v->getTagName();
+            }
+        }
+        $updateBlogPostRequest->tags = implode(" ", $tagsArr);
 
         $form = $this->createForm(BlogPostFormType::class, $updateBlogPostRequest);
         $form->handleRequest($request);
@@ -129,6 +152,21 @@ class AdminController extends Controller
             $blogPost->setSlug($updateBlogPostRequest->slug);
             $blogPost->setPublishDate($updateBlogPostRequest->publishDate);
             $blogPost->setVisible($updateBlogPostRequest->visible);
+            $blogPost->setTags([]);
+
+            $tags = explode(" ",$updateBlogPostRequest->tags);
+
+            $tags = array_unique($tags);
+            if (isset($tags[0])){
+                foreach($tags as $k=>$v){
+                    $tag = $entityManager->getRepository(Tag::class)->findOneBy(['tag_name' => $v]);
+                    if (!$tag){
+                        $tag = new Tag();
+                        $tag->setTagName($v);
+                    }
+                    $blogPost->addTag($tag);
+                }
+            }
 
             try {
                 $entityManager->persist($blogPost);
@@ -138,7 +176,6 @@ class AdminController extends Controller
 
                 return $this->render('AppBundle:admin:create.html.twig', ['form' => $form->createView()]);
             }
-
 
             return $this->redirectToRoute('admin_blog_list');
         }
