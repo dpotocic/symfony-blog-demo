@@ -42,6 +42,5 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :shell, :inline => "apachectl restart", run: "always"
   config.vm.provision :shell, :inline => "php /var/www/html/bin/console assetic:dump", run: "always"
-  #config.vm.provision :shell, :inline => "php /var/www/html/yii migrate --interactive=0", run: "always"
 
 end

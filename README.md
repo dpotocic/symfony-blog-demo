@@ -6,8 +6,6 @@
   2. [Vagrant setup](#vagrant)
   3. [Local env setup](#local)
   4. [Getting started](#start)
-  5. [Documentation](#docs)
-  6. [Screens](#screens)
 
 [![Symfony 3.4](https://img.shields.io/badge/Powered_by-Symfony_3.4_Framework-green.svg?style=flat)](http://symfony.com/doc/3.4/setup.html)
 
@@ -63,10 +61,13 @@ Project general requirements are
 
     After cloning the repo and installing Composer dependencies, initialize the app:
 
-    1. php bin/console ckeditor:install
-    2. php bin/console assets:install web
-    3. php bin/console doctrine:schema:update --force
-    4. php bin/console fos:user:create admin admin@example.com password --super-admin
+    1. Create database symfony_blog
+    2. Copy parameters.yml.dist to parameters.yml and change values for your env
+    3. php bin/console ckeditor:install
+    4. php bin/console assets:install web
+    5. php bin/console doctrine:schema:update --force
+    6. php bin/console fos:user:create admin admin@example.com password --super-admin
+    7. php bin//console assetic:dump
 
 
 ## <a name="start"></a>Getting started
@@ -80,7 +81,4 @@ Project general requirements are
 
     Admin account:    admin/password
 
-## <a name="docs"></a>Swagger API documentation
-
-### Docs
 
