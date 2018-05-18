@@ -8,8 +8,9 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Type;
 use Doctrine\Common\Collections\ArrayCollection;
-use JMS\Serializer\Annotation as JMS;
+
 
 
 /**
@@ -98,7 +99,7 @@ class Post
      * @Groups({"details"})
      * @MaxDepth(3)
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts", cascade={"persist"}, fetch="EAGER")
-     * @JMS\Type("ArrayCollection<AppBundle\Entity\Tag>")
+     * @Type("ArrayCollection<AppBundle\Entity\Tag>")
      */
     protected $tags;
 

@@ -22,6 +22,8 @@ class Tag
     /**
      * @var int
      *
+     * @Expose()
+     * @Groups({"details"})
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -30,6 +32,7 @@ class Tag
 
     /**
      * @var string
+     * @Expose()
      * @Groups({"details"})
      * @ORM\Column(name="tag_name", type="string", length=150, unique=true)
      */
