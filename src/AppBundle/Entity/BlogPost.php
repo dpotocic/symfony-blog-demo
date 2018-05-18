@@ -72,8 +72,6 @@ class BlogPost
     /**
      * @var \int
      *
-     * @Expose()
-     * @Groups({"details"})
      * @ORM\Column(name="visible", type="integer")
      */
     private $visible;
@@ -81,8 +79,6 @@ class BlogPost
     /**
      * @var \DateTime
      *
-     * @Expose()
-     * @Groups({"details"})
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
@@ -90,8 +86,6 @@ class BlogPost
     /**
      * @var \int
      *
-     * @Expose()
-     * @Groups({"details"})
      * @ORM\Column(name="view_count", type="integer")
      */
     private $viewCount;

@@ -30,6 +30,7 @@ ln -s /usr/share/zoneinfo/Europe/Zagreb /etc/localtime
 
 php /var/www/html/bin/console ckeditor:install
 php /var/www/html/bin/console assets:install web
+php /var/www/html/bin/console doctrine:schema:update --force
 php /var/www/html/bin/console fos:user:create admin admin@example.com password --super-admin
 
 

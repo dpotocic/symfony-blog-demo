@@ -1,6 +1,6 @@
-# SYMFONY BLOG DEMO
+# Blog application
 
-# TABLE OF CONTENT
+## TABLE OF CONTENT
 
   1. [Requirements](#requirements)
   2. [Vagrant setup](#vagrant)
@@ -9,7 +9,7 @@
   5. [Documentation](#docs)
   6. [Screens](#screens)
 
-[![Symfony 3.4](https://img.shields.io/badge/Powered_by-Symfony_3_Framework-green.svg?style=flat)](http://symfony.com/doc/3.4/setup.html)
+[![Symfony 3.4](https://img.shields.io/badge/Powered_by-Symfony_3.4_Framework-green.svg?style=flat)](http://symfony.com/doc/3.4/setup.html)
 
 ## <a name="requirements"></a>Requirements
 
@@ -58,12 +58,15 @@ Project general requirements are
     1. Clone this repo: `git clone git@github.com:dpotocic/symfony-blog-demo.git`
     2. Move into newly created directory: `cd symfony-blog-demo/`
     3. Install dependencies using [Composer](https://getcomposer.org/): `composer install`
-    4. Create an Apache VirtualHost and `ServerName symfony-blog-demo.loc:8080` and `DocumentRoot` pointing to [`public/`](public/)
+    4. Create an Apache VirtualHost and `ServerName symfony-blog-demo.loc:8080` and `DocumentRoot` pointing to [`web/`](web/)
     5. Adjust your `hosts` file accordingly
 
     After cloning the repo and installing Composer dependencies, initialize the app:
 
-    1.
+    1. php bin/console ckeditor:install
+    2. php bin/console assets:install web
+    3. php bin/console doctrine:schema:update --force
+    4. php bin/console fos:user:create admin admin@example.com password --super-admin
 
 
 ## <a name="start"></a>Getting started
@@ -75,7 +78,7 @@ Project general requirements are
         ** http://symfony-blog-demo.loc:8080/api/blogs
         ** http://symfony-blog-demo.loc:8080/api/blogs/{id}
 
-    Admin account:    admin/admin
+    Admin account:    admin/password
 
 ## <a name="docs"></a>Swagger API documentation
 
